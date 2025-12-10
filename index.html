@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Local Landing Page Audit | Free Local SEO Scanner</title>
+  <meta name="description" content="Free local SEO audit tool. Upload your HTML and get instant analysis of 100+ local ranking factors including schema, NAP, E-E-A-T, and more.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brand-blue: #4A90D9;
+      --brand-blue-light: #6BA5E7;
+      --brand-blue-dark: #3A7BC8;
+      --bg-dark: #0f172a;
+      --bg-card: rgba(30, 41, 59, 0.5);
+      --bg-card-solid: #1e293b;
+      --text-primary: #e2e8f0;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --border-color: rgba(148, 163, 184, 0.15);
+      --success: #059669;
+      --success-light: #6ee7b7;
+      --warning: #d97706;
+      --warning-light: #fcd34d;
+      --danger: #dc2626;
+      --danger-light: #fca5a5;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, var(--bg-dark) 0%, #1e293b 50%, var(--bg-dark) 100%);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* Header */
+    .header {
+      background: rgba(15, 23, 42, 0.9);
+      border-bottom: 1px solid var(--border-color);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 16px 24px;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .logo h1 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--brand-blue);
+      letter-spacing: -0.02em;
+    }
+
+    .logo p {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      background: transparent;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--text-primary);
+      font-size: 0.8rem;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn:hover {
+      background: rgba(74, 144, 217, 0.1);
+      border-color: var(--brand-blue);
+    }
+
+    .btn-primary {
+      background: var(--brand-blue);
+      border-color: var(--brand-blue);
+      color: white;
+      font-weight: 600;
+    }
+
+    .btn-primary:hover {
+      background: var(--brand-blue-dark);
+    }
+
+    .btn-danger {
+      border-color: rgba(239, 68, 68, 0.5);
+      color: #f87171;
+    }
+
+    /* Upload Section */
+    .upload-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .upload-container {
+      background: var(--bg-card);
+      border: 2px dashed var(--border-color);
+      border-radius: 16px;
+      padding: 48px 24px;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .upload-container:hover,
+    .upload-container.dragover {
+      border-color: var(--brand-blue);
+      background: rgba(74, 144, 217, 0.05);
+    }
+
+    .upload-container.has-file {
+      border-style: solid;
+      border-color: var(--success);
+      background: rgba(5, 150, 105, 0.05);
+    }
+
+    .upload-icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+    }
+
+    .upload-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--brand-blue);
+      margin-bottom: 8px;
+    }
+
+    .upload-subtitle {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+    }
+
+    .upload-input {
+      display: none;
+    }
+
+    .upload-btn {
+      display: inline-block;
+      padding: 12px 32px;
+      background: var(--brand-blue);
+      color: white;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .upload-btn:hover {
+      background: var(--brand-blue-dark);
+      transform: translateY(-1px);
+    }
+
+    .file-info {
+      margin-top: 16px;
+      padding: 12px 16px;
+      background: rgba(5, 150, 105, 0.1);
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--success-light);
+    }
+
+    /* Score Dashboard */
+    .dashboard {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border-color);
+      padding: 24px;
+      display: none;
+    }
+
+    .dashboard.visible {
+      display: block;
+    }
+
+    .dashboard-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .score-card {
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 16px;
+      padding: 24px;
+      border: 1px solid var(--border-color);
+    }
+
+    .score-card.main {
+      text-align: center;
+    }
+
+    .grade {
+      font-size: 4rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .grade-label {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin-top: 8px;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: rgba(148, 163, 184, 0.2);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 8px 0;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+
+    .stats-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    .stats-row strong {
+      color: var(--text-primary);
+    }
+
+    .mini-scores {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 8px;
+    }
+
+    .mini-score {
+      background: rgba(30, 41, 59, 0.5);
+      padding: 8px 12px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .mini-score-icon {
+      font-size: 1rem;
+    }
+
+    .mini-score-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .mini-score-name {
+      font-size: 0.65rem;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .mini-score-value {
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    /* Main Content */
+    .main-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+      display: none;
+    }
+
+    .main-content.visible {
+      display: block;
+    }
+
+    /* Category Sections */
+    .category {
+      background: var(--bg-card);
+      border-radius: 16px;
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .category-header {
+      width: 100%;
+      padding: 20px 24px;
+      background: rgba(15, 23, 42, 0.4);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      color: var(--text-primary);
+      text-align: left;
+      font-family: inherit;
+    }
+
+    .category-icon {
+      font-size: 1.5rem;
+    }
+
+    .category-info {
+      flex: 1;
+    }
+
+    .category-title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--brand-blue);
+    }
+
+    .category-desc {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    .category-badge {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+
+    .category-arrow {
+      color: var(--text-secondary);
+      transition: transform 0.2s ease;
+    }
+
+    .category.expanded .category-arrow {
+      transform: rotate(180deg);
+    }
+
+    .category-items {
+      padding: 8px 16px 16px;
+      display: none;
+    }
+
+    .category.expanded .category-items {
+      display: block;
+    }
+
+    /* Audit Items */
+    .audit-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px;
+      margin-top: 8px;
+      background: rgba(15, 23, 42, 0.3);
+      border-radius: 10px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .audit-item:hover {
+      background: rgba(15, 23, 42, 0.5);
+    }
+
+    .audit-item.passed {
+      background: rgba(5, 150, 105, 0.1);
+      border-color: rgba(5, 150, 105, 0.3);
+    }
+
+    .audit-item.failed {
+      background: rgba(220, 38, 38, 0.05);
+      border-color: rgba(220, 38, 38, 0.2);
+    }
+
+    .audit-item.manual {
+      background: rgba(217, 119, 6, 0.05);
+      border-color: rgba(217, 119, 6, 0.2);
+    }
+
+    .status-indicator {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .status-indicator.passed {
+      background: var(--success);
+      color: white;
+    }
+
+    .status-indicator.failed {
+      background: var(--danger);
+      color: white;
+    }
+
+    .status-indicator.manual {
+      background: var(--warning);
+      color: white;
+    }
+
+    .audit-content {
+      flex: 1;
+    }
+
+    .audit-label-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .audit-label {
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .audit-item.passed .audit-label {
+      color: var(--success-light);
+    }
+
+    .audit-item.failed .audit-label {
+      color: var(--danger-light);
+    }
+
+    .audit-item.manual .audit-label {
+      color: var(--warning-light);
+    }
+
+    .priority-badge {
+      font-size: 0.65rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .priority-high {
+      background: rgba(239, 68, 68, 0.2);
+      color: var(--danger-light);
+    }
+
+    .priority-med {
+      background: rgba(251, 191, 36, 0.2);
+      color: var(--warning-light);
+    }
+
+    .priority-low {
+      background: rgba(148, 163, 184, 0.2);
+      color: var(--text-secondary);
+    }
+
+    .audit-tip {
+      margin-top: 8px;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .audit-finding {
+      margin-top: 8px;
+      padding: 8px 12px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-family: 'Monaco', 'Consolas', monospace;
+      color: var(--text-muted);
+      word-break: break-all;
+    }
+
+    .audit-finding.found {
+      color: var(--success-light);
+    }
+
+    .audit-finding.missing {
+      color: var(--danger-light);
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 40px;
+      padding: 24px;
+      background: rgba(15, 23, 42, 0.4);
+      border-radius: 16px;
+      border: 1px solid var(--border-color);
+      text-align: center;
+    }
+
+    .footer h3 {
+      margin: 0 0 12px 0;
+      font-size: 1rem;
+      color: var(--text-secondary);
+    }
+
+    .grade-guide {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .grade-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 8px;
+    }
+
+    .grade-item span:first-child {
+      font-weight: 700;
+      font-size: 1.25rem;
+    }
+
+    .grade-item span:last-child {
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+    }
+
+    .footer-note {
+      margin-top: 16px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .powered-by {
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-color);
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .powered-by a {
+      color: var(--brand-blue);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .powered-by a:hover {
+      text-decoration: underline;
+    }
+
+    /* Legend */
+    .legend {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+    }
+
+    .legend-dot.passed { background: var(--success); }
+    .legend-dot.failed { background: var(--danger); }
+    .legend-dot.manual { background: var(--warning); }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .dashboard-content {
+        grid-template-columns: 1fr;
+      }
+      
+      .score-card.mini-container {
+        grid-column: span 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <div class="logo">
+        <h1>Local Landing Page Audit</h1>
+        <p>108 local SEO factors • Automatic HTML scanning • No API required</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn" id="expandAll">Expand All</button>
+        <button class="btn" id="collapseAll">Collapse All</button>
+        <button class="btn" id="toggleTips">💡 Tips On</button>
+        <button class="btn btn-danger" id="resetBtn">Reset</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="upload-section">
+    <div class="upload-container" id="uploadContainer">
+      <div class="upload-icon">📄</div>
+      <div class="upload-title">Upload Your HTML File</div>
+      <div class="upload-subtitle">Drag & drop your local landing page HTML, or click to browse.<br>We'll automatically scan for 100+ local SEO factors.</div>
+      <label class="upload-btn">
+        Choose File
+        <input type="file" class="upload-input" id="fileInput" accept=".html,.htm">
+      </label>
+      <div class="file-info" id="fileInfo" style="display: none;">
+        <span>✓</span>
+        <span id="fileName"></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="dashboard" id="dashboard">
+    <div class="dashboard-content">
+      <div class="score-card main">
+        <div class="grade" id="grade">-</div>
+        <div class="grade-label" id="gradeLabel">Upload a file to begin</div>
+      </div>
+      
+      <div class="score-card">
+        <div style="margin-bottom: 16px;">
+          <div class="stats-row" style="margin-bottom: 8px;">
+            <span>Overall Score</span>
+            <span style="font-weight: 600;" id="percentage">0%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 0%; background: var(--text-muted);"></div>
+          </div>
+        </div>
+        <div class="stats-row">
+          <span>Passed: <strong id="passedCount">0</strong></span>
+          <span>Failed: <strong id="failedCount">0</strong></span>
+          <span>Manual: <strong id="manualCount">0</strong></span>
+        </div>
+      </div>
+
+      <div class="score-card mini-container" style="grid-column: span 2;">
+        <div class="mini-scores" id="miniScores"></div>
+      </div>
+    </div>
+  </section>
+
+  <main class="main-content" id="mainContent">
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot passed"></div> Auto-detected: Pass</div>
+      <div class="legend-item"><div class="legend-dot failed"></div> Auto-detected: Missing/Fail</div>
+      <div class="legend-item"><div class="legend-dot manual"></div> Manual verification needed</div>
+    </div>
+    <div id="categoriesContainer"></div>
+    
+    <footer class="footer">
+      <h3>Scoring Guide</h3>
+      <div class="grade-guide">
+        <div class="grade-item" style="background: rgba(5, 150, 105, 0.15);"><span style="color: #059669;">A</span><span>90-100%</span></div>
+        <div class="grade-item" style="background: rgba(8, 145, 178, 0.15);"><span style="color: #0891b2;">B</span><span>80-89%</span></div>
+        <div class="grade-item" style="background: rgba(217, 119, 6, 0.15);"><span style="color: #d97706;">C</span><span>70-79%</span></div>
+        <div class="grade-item" style="background: rgba(220, 38, 38, 0.15);"><span style="color: #dc2626;">D</span><span>60-69%</span></div>
+        <div class="grade-item" style="background: rgba(153, 27, 27, 0.15);"><span style="color: #991b1b;">F</span><span>0-59%</span></div>
+      </div>
+      <p class="footer-note">Priority weights: <span style="color: #fca5a5;">HIGH (3pts)</span> • <span style="color: #fcd34d;">MED (2pts)</span> • <span style="color: #94a3b8;">LOW (1pt)</span></p>
+      <div class="powered-by">
+        Built by <a href="https://www.rizenmetrics.com" target="_blank" rel="noopener">RiZen Metrics</a> • Scranton, PA
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    // ============================================
+    // AUDIT CATEGORIES & ITEMS DEFINITION
+    // ============================================
+    const auditCategories = [
+      {
+        id: 'page-foundation',
+        name: 'Page Foundation',
+        description: 'Core on-page SEO elements that establish relevance and crawlability',
+        icon: '🏗️',
+        items: [
+          { id: 'title-tag', label: 'Title tag includes primary keyword + city/location', weight: 3, tip: 'Format: "Service + City | Brand" (e.g., "Plumber in Austin | ABC Plumbing"). Keep under 60 characters.', check: 'title-location' },
+          { id: 'title-length', label: 'Title tag is 50-60 characters', weight: 1, tip: 'Google truncates titles over 60 characters. Aim for 50-60 to ensure full visibility in SERPs.', check: 'title-length' },
+          { id: 'meta-description', label: 'Meta description present and includes location', weight: 2, tip: 'Include city name, service, and a compelling call-to-action. Keep under 155 characters.', check: 'meta-desc' },
+          { id: 'h1-unique', label: 'H1 is present and contains location reference', weight: 3, tip: 'Only one H1 per page. Should reinforce title tag relevance. Example: "Professional Roof Repair in Denver, CO"', check: 'h1-location' },
+          { id: 'h1-count', label: 'Only one H1 tag on page', weight: 2, tip: 'Multiple H1s dilute page focus. Use H2-H6 for subheadings.', check: 'h1-count' },
+          { id: 'h2-present', label: 'H2 subheadings present for content structure', weight: 2, tip: 'Use H2s to break up content and include location modifiers where natural.', check: 'h2-present' },
+          { id: 'url-structure', label: 'URL contains location slug', weight: 2, tip: 'Short, descriptive URLs with location signal relevance (e.g., /austin-plumber/).', check: 'manual' },
+          { id: 'internal-links', label: 'Internal links present', weight: 2, tip: 'Link to your other service pages, location pages, and relevant blog content.', check: 'internal-links' },
+          { id: 'external-links', label: 'External links to authoritative sources', weight: 1, tip: 'Link to local Chamber of Commerce, city resources, or industry associations.', check: 'external-links' },
+          { id: 'image-alt-tags', label: 'Images have alt tags', weight: 2, tip: 'Alt text should describe the image AND include location when relevant.', check: 'img-alt' },
+          { id: 'image-count', label: 'Page includes images', weight: 1, tip: 'Visual content improves engagement. Use real photos of your work/team.', check: 'img-count' },
+          { id: 'mobile-viewport', label: 'Mobile viewport meta tag present', weight: 3, tip: 'Required for mobile-responsive design. Google uses mobile-first indexing.', check: 'viewport' },
+          { id: 'canonical-tag', label: 'Canonical tag is present', weight: 1, tip: 'Self-referencing canonical prevents duplicate content issues.', check: 'canonical' },
+        ],
+      },
+      {
+        id: 'local-signals',
+        name: 'Local Signals & Targeting',
+        description: 'Geographic relevance indicators that help search engines understand your service area',
+        icon: '📍',
+        items: [
+          { id: 'city-in-content', label: 'City/location mentioned in body content', weight: 3, tip: 'Mention your primary city naturally throughout content. Avoid keyword stuffing.', check: 'body-location' },
+          { id: 'state-mentioned', label: 'State/region mentioned', weight: 2, tip: 'Include state name or abbreviation to clarify geographic targeting.', check: 'body-state' },
+          { id: 'zip-code', label: 'ZIP/postal code present', weight: 1, tip: 'ZIP codes help with hyperlocal targeting and NAP completeness.', check: 'zip-code' },
+          { id: 'neighborhoods', label: 'Specific neighborhoods/suburbs mentioned', weight: 2, tip: 'Reference neighborhoods you serve to capture hyperlocal searches.', check: 'manual' },
+          { id: 'local-landmarks', label: 'Local landmarks or points of reference', weight: 2, tip: '"Located 5 minutes from [landmark]" builds local relevance.', check: 'manual' },
+          { id: 'service-area-defined', label: 'Service area clearly defined', weight: 2, tip: 'List all cities/zip codes you serve explicitly.', check: 'manual' },
+          { id: 'google-map-embed', label: 'Google Maps embed present', weight: 2, tip: 'Embedding a Google Map confirms your location to search engines.', check: 'google-map' },
+          { id: 'directions-mention', label: 'Driving directions or "how to find us" content', weight: 1, tip: 'Directions content helps users and signals physical presence.', check: 'manual' },
+          { id: 'local-content', label: 'Content references local community/events', weight: 2, tip: 'Local references show community involvement and relevance.', check: 'manual' },
+        ],
+      },
+      {
+        id: 'nap-contact',
+        name: 'NAP & Contact Information',
+        description: 'Name, Address, Phone consistency signals that validate your business identity',
+        icon: '📞',
+        items: [
+          { id: 'phone-present', label: 'Phone number visible on page', weight: 3, tip: 'Phone number should appear prominently. Essential for local SEO.', check: 'phone' },
+          { id: 'phone-clickable', label: 'Phone number is click-to-call (tel: link)', weight: 2, tip: 'Use <a href="tel:...">. Critical for mobile users.', check: 'tel-link' },
+          { id: 'phone-local', label: 'Local area code phone number (not just toll-free)', weight: 2, tip: 'Local numbers signal local presence. 1-800 only can hurt.', check: 'manual' },
+          { id: 'address-present', label: 'Street address visible on page', weight: 3, tip: 'Full address should be in HTML text, not just images.', check: 'address' },
+          { id: 'business-name', label: 'Business name clearly displayed', weight: 2, tip: 'Business name should match GBP exactly.', check: 'manual' },
+          { id: 'email-present', label: 'Email address or contact form present', weight: 2, tip: 'Multiple contact methods improve conversions.', check: 'email-or-form' },
+          { id: 'contact-form', label: 'Contact form present', weight: 2, tip: 'Lead capture is essential. Form should be prominent.', check: 'contact-form' },
+          { id: 'hours-displayed', label: 'Business hours displayed', weight: 2, tip: 'Show hours on page AND in schema markup.', check: 'hours' },
+          { id: 'nap-footer', label: 'NAP appears in footer', weight: 2, tip: 'Footer NAP creates site-wide consistency.', check: 'footer-nap' },
+        ],
+      },
+      {
+        id: 'schema-structured',
+        name: 'Schema & Structured Data',
+        description: 'Machine-readable markup that helps search engines understand your business',
+        icon: '🔧',
+        items: [
+          { id: 'localbusiness-schema', label: 'LocalBusiness schema present', weight: 3, tip: 'Use the most specific type: Plumber, Dentist, Restaurant, etc.', check: 'schema-localbusiness' },
+          { id: 'schema-name', label: 'Schema includes business name (@name)', weight: 2, tip: 'Must match your GBP name exactly.', check: 'schema-name' },
+          { id: 'schema-address', label: 'Schema includes address', weight: 2, tip: 'Include full PostalAddress with all components.', check: 'schema-address' },
+          { id: 'schema-phone', label: 'Schema includes telephone', weight: 2, tip: 'Use E.164 format: "+15551234567".', check: 'schema-telephone' },
+          { id: 'schema-geo', label: 'Schema includes geo coordinates', weight: 2, tip: 'GeoCoordinates help with "near me" searches.', check: 'schema-geo' },
+          { id: 'schema-hours', label: 'Schema includes opening hours', weight: 2, tip: 'Structured hours enable rich results.', check: 'schema-hours' },
+          { id: 'schema-url', label: 'Schema includes website URL', weight: 1, tip: 'Include @url property pointing to your site.', check: 'schema-url' },
+          { id: 'schema-sameas', label: 'Schema includes sameAs (social profiles)', weight: 2, tip: 'Link to GBP, Facebook, LinkedIn, Yelp.', check: 'schema-sameas' },
+          { id: 'schema-areaserved', label: 'Schema includes areaServed', weight: 2, tip: 'Define your service area in schema.', check: 'schema-areaserved' },
+          { id: 'schema-review', label: 'AggregateRating schema present', weight: 2, tip: 'Only add if actual reviews are displayed on page.', check: 'schema-rating' },
+          { id: 'faq-schema', label: 'FAQPage schema for FAQ content', weight: 2, tip: 'If FAQ section exists, mark it up for rich results.', check: 'schema-faq' },
+          { id: 'schema-valid', label: 'Schema appears properly formatted', weight: 2, tip: 'Validate with Google Rich Results Test.', check: 'schema-valid' },
+        ],
+      },
+      {
+        id: 'eeat-trust',
+        name: 'E-E-A-T & Trust Signals',
+        description: 'Experience, Expertise, Authoritativeness, Trustworthiness indicators',
+        icon: '🛡️',
+        items: [
+          { id: 'about-link', label: 'Link to About Us page', weight: 2, tip: 'Google wants to know who\'s behind the site.', check: 'about-link' },
+          { id: 'team-info', label: 'Team/owner information present', weight: 2, tip: 'Real people = real business. Show your team.', check: 'manual' },
+          { id: 'years-business', label: 'Years in business mentioned', weight: 2, tip: '"Serving [City] since [Year]" builds trust.', check: 'years-business' },
+          { id: 'licenses', label: 'Professional licenses/certifications mentioned', weight: 3, tip: 'License numbers, certifications are critical for YMYL.', check: 'licenses' },
+          { id: 'awards', label: 'Awards and recognition mentioned', weight: 2, tip: 'Industry awards, "Best of" mentions build authority.', check: 'manual' },
+          { id: 'associations', label: 'Professional association memberships', weight: 2, tip: 'BBB, Chamber, trade associations show legitimacy.', check: 'associations' },
+          { id: 'insurance-bonded', label: 'Insurance/bonded status mentioned', weight: 2, tip: '"Licensed, bonded, insured" essential for service businesses.', check: 'insurance' },
+          { id: 'guarantee', label: 'Satisfaction guarantee mentioned', weight: 1, tip: 'Guarantees reduce conversion friction.', check: 'guarantee' },
+          { id: 'privacy-policy', label: 'Privacy policy link present', weight: 1, tip: 'Legal requirement and trust signal.', check: 'privacy-link' },
+          { id: 'https', label: 'Page indicates HTTPS usage', weight: 2, tip: 'SSL is a confirmed ranking signal.', check: 'manual' },
+          { id: 'author-expertise', label: 'First-person experience content', weight: 2, tip: 'Share real project stories, case studies.', check: 'manual' },
+        ],
+      },
+      {
+        id: 'reviews-proof',
+        name: 'Reviews & Social Proof',
+        description: 'Customer validation signals that build trust and influence decisions',
+        icon: '⭐',
+        items: [
+          { id: 'testimonials', label: 'Customer testimonials displayed', weight: 3, tip: 'Real testimonials with names are powerful conversion elements.', check: 'testimonials' },
+          { id: 'review-stars', label: 'Star ratings visible', weight: 2, tip: 'Visual star ratings quickly communicate quality.', check: 'star-ratings' },
+          { id: 'review-source', label: 'Reviews attributed to source (Google, Yelp)', weight: 2, tip: 'Third-party attribution adds credibility.', check: 'review-source' },
+          { id: 'review-links', label: 'Links to third-party review profiles', weight: 2, tip: 'Link to your Google reviews, Yelp page.', check: 'review-links' },
+          { id: 'review-count', label: 'Total review count mentioned', weight: 2, tip: '"500+ 5-star reviews" is powerful.', check: 'review-count' },
+          { id: 'case-studies', label: 'Case studies or project showcases', weight: 2, tip: 'Before/after, project details prove capability.', check: 'manual' },
+          { id: 'portfolio', label: 'Portfolio or gallery of work', weight: 2, tip: 'Visual proof essential for visual services.', check: 'gallery' },
+          { id: 'client-logos', label: 'Notable client logos displayed', weight: 1, tip: '"Trusted by" sections build credibility.', check: 'manual' },
+          { id: 'social-media-links', label: 'Social media profile links', weight: 1, tip: 'Links to active social profiles.', check: 'social-links' },
+          { id: 'social-proof-numbers', label: 'Social proof numbers (customers served)', weight: 2, tip: '"5,000+ happy customers" - specific numbers convert.', check: 'proof-numbers' },
+        ],
+      },
+      {
+        id: 'content-depth',
+        name: 'Content Quality & Depth',
+        description: 'Substantive content that demonstrates expertise and serves user intent',
+        icon: '📝',
+        items: [
+          { id: 'content-length', label: 'Sufficient content depth (500+ words)', weight: 2, tip: 'Local pages need 500-1500 words of useful content.', check: 'word-count' },
+          { id: 'unique-content', label: 'Content appears unique (not boilerplate)', weight: 3, tip: 'Duplicate content across pages is a penalty risk.', check: 'manual' },
+          { id: 'service-detail', label: 'Services explained in detail', weight: 2, tip: 'Don\'t just list—explain what, how, expectations.', check: 'manual' },
+          { id: 'local-expertise', label: 'Local expertise demonstrated', weight: 3, tip: 'Area-specific knowledge can\'t be faked.', check: 'manual' },
+          { id: 'faq-section', label: 'FAQ section present', weight: 2, tip: 'FAQ content captures long-tail searches.', check: 'faq-section' },
+          { id: 'pricing-info', label: 'Pricing information provided', weight: 2, tip: 'Even ranges help: "Most projects $500-$2,000."', check: 'pricing' },
+          { id: 'process-explained', label: 'Service process explained', weight: 2, tip: 'Step-by-step process reduces anxiety.', check: 'process' },
+          { id: 'cta-present', label: 'Clear calls-to-action present', weight: 2, tip: 'Multiple CTAs: above fold, mid-page, end.', check: 'cta' },
+          { id: 'readability', label: 'Content uses paragraphs (not walls of text)', weight: 1, tip: 'Break up text, use subheadings for readability.', check: 'paragraphs' },
+        ],
+      },
+      {
+        id: 'ux-conversion',
+        name: 'UX & Conversion Optimization',
+        description: 'User experience factors that impact engagement and conversions',
+        icon: '🎯',
+        items: [
+          { id: 'above-fold-cta', label: 'CTA visible in early page content', weight: 2, tip: 'Contact method should be prominent early.', check: 'early-cta' },
+          { id: 'sticky-elements', label: 'Sticky header/navigation present', weight: 1, tip: 'Sticky elements keep contact info accessible.', check: 'sticky' },
+          { id: 'no-broken-images', label: 'No broken image references', weight: 2, tip: 'Broken images hurt UX and credibility.', check: 'broken-images' },
+          { id: 'form-present', label: 'Lead capture form present', weight: 2, tip: 'Forms should be simple with minimal fields.', check: 'form' },
+          { id: 'form-simple', label: 'Form has reasonable number of fields', weight: 1, tip: 'Every additional field reduces conversions.', check: 'form-fields' },
+          { id: 'button-present', label: 'Action buttons present', weight: 1, tip: 'Buttons should be visible and clickable.', check: 'buttons' },
+          { id: 'accessibility-alt', label: 'Images have accessibility alt text', weight: 1, tip: 'Alt text helps screen readers and SEO.', check: 'img-alt' },
+          { id: 'no-autoplay', label: 'No autoplay video/audio detected', weight: 1, tip: 'Autoplay is annoying and wastes data.', check: 'autoplay' },
+        ],
+      },
+      {
+        id: 'gbp-integration',
+        name: 'GBP & Ecosystem Integration',
+        description: 'Connections to Google Business Profile and local ecosystem',
+        icon: '🌐',
+        items: [
+          { id: 'gbp-link', label: 'Link to Google Business Profile', weight: 2, tip: 'Link to your GBP listing for reviews.', check: 'gbp-link' },
+          { id: 'review-request', label: 'Easy way to leave a review (review link)', weight: 2, tip: 'Direct link to leave a Google review.', check: 'review-request' },
+          { id: 'yelp-link', label: 'Link to Yelp profile', weight: 1, tip: 'Yelp remains important for many industries.', check: 'yelp-link' },
+          { id: 'facebook-link', label: 'Link to Facebook page', weight: 1, tip: 'Facebook business page link.', check: 'facebook-link' },
+          { id: 'bbb-link', label: 'BBB profile link or badge', weight: 1, tip: 'BBB accreditation builds trust.', check: 'bbb-link' },
+          { id: 'industry-directories', label: 'Links to industry-specific directories', weight: 1, tip: 'Industry directories provide authority signals.', check: 'manual' },
+        ],
+      },
+    ];
+
+    // ============================================
+    // SCANNING FUNCTIONS
+    // ============================================
+    function scanHTML(html) {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const results = {};
+      const findings = {};
+      
+      // Get text content for searches
+      const bodyText = doc.body ? doc.body.textContent.toLowerCase() : '';
+      const fullHTML = html.toLowerCase();
+      
+      // Common location patterns
+      const locationPatterns = /\b(alabama|alaska|arizona|arkansas|california|colorado|connecticut|delaware|florida|georgia|hawaii|idaho|illinois|indiana|iowa|kansas|kentucky|louisiana|maine|maryland|massachusetts|michigan|minnesota|mississippi|missouri|montana|nebraska|nevada|new hampshire|new jersey|new mexico|new york|north carolina|north dakota|ohio|oklahoma|oregon|pennsylvania|rhode island|south carolina|south dakota|tennessee|texas|utah|vermont|virginia|washington|west virginia|wisconsin|wyoming|al|ak|az|ar|ca|co|ct|de|fl|ga|hi|id|il|in|ia|ks|ky|la|me|md|ma|mi|mn|ms|mo|mt|ne|nv|nh|nj|nm|ny|nc|nd|oh|ok|or|pa|ri|sc|sd|tn|tx|ut|vt|va|wa|wv|wi|wy)\b/i;
+      const cityPattern = /\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)?\s*,?\s*(?:AL|AK|AZ|AR|CA|CO|CT|DE|FL|GA|HI|ID|IL|IN|IA|KS|KY|LA|ME|MD|MA|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NM|NY|NC|ND|OH|OK|OR|PA|RI|SC|SD|TN|TX|UT|VT|VA|WA|WV|WI|WY|Alabama|Alaska|Arizona|Arkansas|California|Colorado|Connecticut|Delaware|Florida|Georgia|Hawaii|Idaho|Illinois|Indiana|Iowa|Kansas|Kentucky|Louisiana|Maine|Maryland|Massachusetts|Michigan|Minnesota|Mississippi|Missouri|Montana|Nebraska|Nevada|New Hampshire|New Jersey|New Mexico|New York|North Carolina|North Dakota|Ohio|Oklahoma|Oregon|Pennsylvania|Rhode Island|South Carolina|South Dakota|Tennessee|Texas|Utah|Vermont|Virginia|Washington|West Virginia|Wisconsin|Wyoming)\b/;
+      
+      // Title checks
+      const title = doc.querySelector('title');
+      const titleText = title ? title.textContent : '';
+      results['title-location'] = titleText && (locationPatterns.test(titleText) || cityPattern.test(titleText));
+      findings['title-location'] = titleText ? `Found: "${titleText.substring(0, 60)}${titleText.length > 60 ? '...' : ''}"` : 'No title tag found';
+      
+      results['title-length'] = titleText.length >= 50 && titleText.length <= 60;
+      findings['title-length'] = `Title length: ${titleText.length} characters`;
+      
+      // Meta description
+      const metaDesc = doc.querySelector('meta[name="description"]');
+      const metaContent = metaDesc ? metaDesc.getAttribute('content') : '';
+      results['meta-desc'] = metaContent && (locationPatterns.test(metaContent) || cityPattern.test(metaContent));
+      findings['meta-desc'] = metaContent ? `Found: "${metaContent.substring(0, 80)}..."` : 'No meta description found';
+      
+      // H1 checks
+      const h1s = doc.querySelectorAll('h1');
+      const h1Text = h1s.length > 0 ? h1s[0].textContent : '';
+      results['h1-location'] = h1Text && (locationPatterns.test(h1Text) || cityPattern.test(h1Text));
+      findings['h1-location'] = h1Text ? `Found: "${h1Text.substring(0, 60)}"` : 'No H1 found';
+      
+      results['h1-count'] = h1s.length === 1;
+      findings['h1-count'] = `Found ${h1s.length} H1 tag(s)`;
+      
+      // H2 check
+      const h2s = doc.querySelectorAll('h2');
+      results['h2-present'] = h2s.length > 0;
+      findings['h2-present'] = `Found ${h2s.length} H2 tag(s)`;
+      
+      // Internal/external links
+      const links = doc.querySelectorAll('a[href]');
+      let internalCount = 0;
+      let externalCount = 0;
+      links.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && !href.startsWith('#') && !href.startsWith('tel:') && !href.startsWith('mailto:')) {
+          if (href.startsWith('http') && !href.includes(window.location.hostname)) {
+            externalCount++;
+          } else if (!href.startsWith('http') || href.includes(window.location.hostname)) {
+            internalCount++;
+          }
+        }
+      });
+      results['internal-links'] = internalCount > 0;
+      findings['internal-links'] = `Found ${internalCount} internal link(s)`;
+      results['external-links'] = externalCount > 0;
+      findings['external-links'] = `Found ${externalCount} external link(s)`;
+      
+      // Images
+      const images = doc.querySelectorAll('img');
+      results['img-count'] = images.length > 0;
+      findings['img-count'] = `Found ${images.length} image(s)`;
+      
+      let imagesWithAlt = 0;
+      images.forEach(img => {
+        if (img.getAttribute('alt')) imagesWithAlt++;
+      });
+      results['img-alt'] = images.length === 0 || imagesWithAlt >= images.length * 0.8;
+      findings['img-alt'] = `${imagesWithAlt}/${images.length} images have alt text`;
+      
+      // Viewport
+      const viewport = doc.querySelector('meta[name="viewport"]');
+      results['viewport'] = !!viewport;
+      findings['viewport'] = viewport ? 'Viewport meta tag found' : 'Missing viewport meta tag';
+      
+      // Canonical
+      const canonical = doc.querySelector('link[rel="canonical"]');
+      results['canonical'] = !!canonical;
+      findings['canonical'] = canonical ? `Found: ${canonical.getAttribute('href')}` : 'No canonical tag';
+      
+      // Body location content
+      results['body-location'] = locationPatterns.test(bodyText) || cityPattern.test(html);
+      findings['body-location'] = results['body-location'] ? 'Location references found in content' : 'No clear location mentions';
+      
+      // State mentioned
+      results['body-state'] = locationPatterns.test(bodyText);
+      findings['body-state'] = results['body-state'] ? 'State reference found' : 'No state reference found';
+      
+      // ZIP code
+      const zipPattern = /\b\d{5}(-\d{4})?\b/;
+      results['zip-code'] = zipPattern.test(bodyText) || zipPattern.test(html);
+      findings['zip-code'] = results['zip-code'] ? 'ZIP code found' : 'No ZIP code found';
+      
+      // Google Map
+      results['google-map'] = fullHTML.includes('google.com/maps') || fullHTML.includes('maps.google') || fullHTML.includes('iframe') && fullHTML.includes('map');
+      findings['google-map'] = results['google-map'] ? 'Google Maps embed detected' : 'No Google Maps embed found';
+      
+      // Phone number
+      const phonePattern = /(\+?1?[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}/;
+      results['phone'] = phonePattern.test(bodyText) || phonePattern.test(html);
+      findings['phone'] = results['phone'] ? 'Phone number found' : 'No phone number found';
+      
+      // Tel link
+      const telLinks = doc.querySelectorAll('a[href^="tel:"]');
+      results['tel-link'] = telLinks.length > 0;
+      findings['tel-link'] = `Found ${telLinks.length} click-to-call link(s)`;
+      
+      // Address patterns
+      const addressPattern = /\d+\s+[A-Za-z]+\s+(street|st|avenue|ave|road|rd|boulevard|blvd|drive|dr|lane|ln|way|court|ct|circle|cir|place|pl)\b/i;
+      results['address'] = addressPattern.test(bodyText) || addressPattern.test(html);
+      findings['address'] = results['address'] ? 'Street address pattern found' : 'No clear street address found';
+      
+      // Email or form
+      const emailPattern = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
+      const hasEmail = emailPattern.test(bodyText) || emailPattern.test(html);
+      const hasForm = doc.querySelectorAll('form').length > 0;
+      results['email-or-form'] = hasEmail || hasForm;
+      findings['email-or-form'] = hasEmail ? 'Email address found' : (hasForm ? 'Contact form found' : 'No email or form');
+      
+      // Contact form
+      results['contact-form'] = hasForm;
+      findings['contact-form'] = `Found ${doc.querySelectorAll('form').length} form(s)`;
+      
+      // Hours
+      const hoursPatterns = /(hours|open|closed|monday|tuesday|wednesday|thursday|friday|saturday|sunday|mon|tue|wed|thu|fri|sat|sun)\s*[:\-]?\s*\d/i;
+      results['hours'] = hoursPatterns.test(bodyText);
+      findings['hours'] = results['hours'] ? 'Business hours pattern found' : 'No business hours detected';
+      
+      // Footer NAP
+      const footer = doc.querySelector('footer');
+      const footerText = footer ? footer.textContent.toLowerCase() : '';
+      results['footer-nap'] = footer && (phonePattern.test(footerText) || addressPattern.test(footerText));
+      findings['footer-nap'] = results['footer-nap'] ? 'NAP info found in footer' : 'No clear NAP in footer';
+      
+      // Schema checks
+      const scripts = doc.querySelectorAll('script[type="application/ld+json"]');
+      let schemaData = [];
+      scripts.forEach(script => {
+        try {
+          const data = JSON.parse(script.textContent);
+          if (Array.isArray(data)) {
+            schemaData = schemaData.concat(data);
+          } else {
+            schemaData.push(data);
+          }
+        } catch(e) {}
+      });
+      
+      const schemaString = JSON.stringify(schemaData).toLowerCase();
+      const hasLocalBusiness = schemaString.includes('localbusiness') || schemaString.includes('organization') || 
+        schemaString.includes('plumber') || schemaString.includes('dentist') || schemaString.includes('restaurant') ||
+        schemaString.includes('attorney') || schemaString.includes('physician') || schemaString.includes('store');
+      
+      results['schema-localbusiness'] = hasLocalBusiness;
+      findings['schema-localbusiness'] = hasLocalBusiness ? 'LocalBusiness or similar schema found' : 'No LocalBusiness schema';
+      
+      results['schema-name'] = schemaString.includes('"name"');
+      findings['schema-name'] = results['schema-name'] ? 'Schema @name property found' : 'No @name in schema';
+      
+      results['schema-address'] = schemaString.includes('address') || schemaString.includes('streetaddress');
+      findings['schema-address'] = results['schema-address'] ? 'Address in schema found' : 'No address in schema';
+      
+      results['schema-telephone'] = schemaString.includes('telephone') || schemaString.includes('phone');
+      findings['schema-telephone'] = results['schema-telephone'] ? 'Telephone in schema found' : 'No telephone in schema';
+      
+      results['schema-geo'] = schemaString.includes('latitude') || schemaString.includes('geo');
+      findings['schema-geo'] = results['schema-geo'] ? 'Geo coordinates found' : 'No geo coordinates';
+      
+      results['schema-hours'] = schemaString.includes('openinghours') || schemaString.includes('hoursavailable');
+      findings['schema-hours'] = results['schema-hours'] ? 'Opening hours in schema' : 'No hours in schema';
+      
+      results['schema-url'] = schemaString.includes('"url"');
+      findings['schema-url'] = results['schema-url'] ? 'URL in schema found' : 'No URL in schema';
+      
+      results['schema-sameas'] = schemaString.includes('sameas');
+      findings['schema-sameas'] = results['schema-sameas'] ? 'sameAs links found' : 'No sameAs in schema';
+      
+      results['schema-areaserved'] = schemaString.includes('areaserved') || schemaString.includes('servicearea');
+      findings['schema-areaserved'] = results['schema-areaserved'] ? 'Area served defined' : 'No areaServed';
+      
+      results['schema-rating'] = schemaString.includes('aggregaterating') || schemaString.includes('ratingvalue');
+      findings['schema-rating'] = results['schema-rating'] ? 'Rating schema found' : 'No rating schema';
+      
+      results['schema-faq'] = schemaString.includes('faqpage') || schemaString.includes('question');
+      findings['schema-faq'] = results['schema-faq'] ? 'FAQ schema found' : 'No FAQ schema';
+      
+      results['schema-valid'] = schemaData.length > 0;
+      findings['schema-valid'] = schemaData.length > 0 ? `${schemaData.length} schema block(s) found` : 'No JSON-LD schema';
+      
+      // E-E-A-T checks
+      const aboutLink = doc.querySelector('a[href*="about"]');
+      results['about-link'] = !!aboutLink;
+      findings['about-link'] = aboutLink ? 'About page link found' : 'No about page link';
+      
+      results['years-business'] = /since\s+\d{4}|established\s+\d{4}|\d{4}.*years|years.*experience/i.test(bodyText);
+      findings['years-business'] = results['years-business'] ? 'Years in business mentioned' : 'No years in business found';
+      
+      results['licenses'] = /licens|certif|accredit|credential/i.test(bodyText);
+      findings['licenses'] = results['licenses'] ? 'License/certification mentions found' : 'No license mentions';
+      
+      results['associations'] = /bbb|chamber|association|member of|affiliated/i.test(bodyText);
+      findings['associations'] = results['associations'] ? 'Association/membership found' : 'No association mentions';
+      
+      results['insurance'] = /insured|bonded|insurance|liability/i.test(bodyText);
+      findings['insurance'] = results['insurance'] ? 'Insurance/bonded mention found' : 'No insurance mention';
+      
+      results['guarantee'] = /guarantee|warranty|satisfaction|money.?back/i.test(bodyText);
+      findings['guarantee'] = results['guarantee'] ? 'Guarantee mention found' : 'No guarantee mention';
+      
+      const privacyLink = doc.querySelector('a[href*="privacy"]');
+      results['privacy-link'] = !!privacyLink;
+      findings['privacy-link'] = privacyLink ? 'Privacy policy link found' : 'No privacy link';
+      
+      // Reviews & social proof
+      results['testimonials'] = /testimonial|review|said|customer|client.*said|what.*say/i.test(bodyText);
+      findings['testimonials'] = results['testimonials'] ? 'Testimonial content found' : 'No testimonials detected';
+      
+      results['star-ratings'] = /★|☆|stars?|rating|\d(\.\d)?\s*(out of|\/)\s*5/i.test(bodyText) || fullHTML.includes('star');
+      findings['star-ratings'] = results['star-ratings'] ? 'Star rating elements found' : 'No star ratings';
+      
+      results['review-source'] = /google review|yelp review|facebook review|verified review/i.test(bodyText);
+      findings['review-source'] = results['review-source'] ? 'Review source attribution found' : 'No review source attribution';
+      
+      results['review-links'] = fullHTML.includes('google.com/maps') || fullHTML.includes('yelp.com') || fullHTML.includes('review');
+      findings['review-links'] = results['review-links'] ? 'Review profile links detected' : 'No review profile links';
+      
+      results['review-count'] = /\d+\s*(reviews?|\+?\s*reviews?|5-star|five.star)/i.test(bodyText);
+      findings['review-count'] = results['review-count'] ? 'Review count mentioned' : 'No review count';
+      
+      results['gallery'] = doc.querySelectorAll('img').length >= 5 || /gallery|portfolio|our work|projects/i.test(bodyText);
+      findings['gallery'] = results['gallery'] ? 'Gallery/portfolio elements found' : 'No gallery detected';
+      
+      results['social-links'] = fullHTML.includes('facebook.com') || fullHTML.includes('instagram.com') || 
+        fullHTML.includes('linkedin.com') || fullHTML.includes('twitter.com') || fullHTML.includes('x.com');
+      findings['social-links'] = results['social-links'] ? 'Social media links found' : 'No social links';
+      
+      results['proof-numbers'] = /\d{1,3}(,\d{3})*\+?\s*(customers?|clients?|projects?|jobs?|years?|happy)/i.test(bodyText);
+      findings['proof-numbers'] = results['proof-numbers'] ? 'Social proof numbers found' : 'No proof numbers';
+      
+      // Content checks
+      const wordCount = bodyText.split(/\s+/).filter(w => w.length > 2).length;
+      results['word-count'] = wordCount >= 500;
+      findings['word-count'] = `Approximately ${wordCount} words`;
+      
+      results['faq-section'] = /faq|frequently asked|common questions|q\s*[&:]\s*a/i.test(bodyText);
+      findings['faq-section'] = results['faq-section'] ? 'FAQ section detected' : 'No FAQ section';
+      
+      results['pricing'] = /\$\d|price|cost|rate|fee|starting at|from \$/i.test(bodyText);
+      findings['pricing'] = results['pricing'] ? 'Pricing information found' : 'No pricing info';
+      
+      results['process'] = /step\s*\d|process|how\s*(it|we)\s*work|what to expect/i.test(bodyText);
+      findings['process'] = results['process'] ? 'Process/steps content found' : 'No process content';
+      
+      results['cta'] = /call now|contact|get.*(quote|estimate|started)|schedule|book|request|free/i.test(bodyText);
+      findings['cta'] = results['cta'] ? 'Call-to-action found' : 'No clear CTA';
+      
+      const paragraphs = doc.querySelectorAll('p');
+      results['paragraphs'] = paragraphs.length >= 3;
+      findings['paragraphs'] = `Found ${paragraphs.length} paragraph(s)`;
+      
+      // UX checks
+      results['early-cta'] = doc.querySelector('header a[href*="tel:"], header button, .hero button, .hero a');
+      findings['early-cta'] = results['early-cta'] ? 'Early CTA element found' : 'No early CTA detected';
+      
+      results['sticky'] = fullHTML.includes('position: sticky') || fullHTML.includes('position:sticky') || 
+        fullHTML.includes('position: fixed') || fullHTML.includes('fixed-top');
+      findings['sticky'] = results['sticky'] ? 'Sticky/fixed elements detected' : 'No sticky elements';
+      
+      let brokenImages = 0;
+      images.forEach(img => {
+        const src = img.getAttribute('src');
+        if (!src || src === '' || src === '#') brokenImages++;
+      });
+      results['broken-images'] = brokenImages === 0;
+      findings['broken-images'] = brokenImages > 0 ? `${brokenImages} potentially broken image(s)` : 'No broken images detected';
+      
+      results['form'] = hasForm;
+      findings['form'] = `Found ${doc.querySelectorAll('form').length} form(s)`;
+      
+      const formInputs = doc.querySelectorAll('form input, form select, form textarea');
+      results['form-fields'] = !hasForm || formInputs.length <= 6;
+      findings['form-fields'] = hasForm ? `Form has ${formInputs.length} field(s)` : 'No form to check';
+      
+      results['buttons'] = doc.querySelectorAll('button, input[type="submit"], .btn, .button').length > 0;
+      findings['buttons'] = `Found ${doc.querySelectorAll('button, .btn, .button').length} button(s)`;
+      
+      results['autoplay'] = !fullHTML.includes('autoplay');
+      findings['autoplay'] = fullHTML.includes('autoplay') ? 'Autoplay detected' : 'No autoplay found';
+      
+      // GBP & ecosystem
+      results['gbp-link'] = fullHTML.includes('google.com/maps') || fullHTML.includes('goo.gl/maps') || 
+        fullHTML.includes('business.google');
+      findings['gbp-link'] = results['gbp-link'] ? 'Google Business link found' : 'No GBP link';
+      
+      results['review-request'] = /leave.*review|write.*review|review us/i.test(bodyText);
+      findings['review-request'] = results['review-request'] ? 'Review request found' : 'No review request';
+      
+      results['yelp-link'] = fullHTML.includes('yelp.com');
+      findings['yelp-link'] = results['yelp-link'] ? 'Yelp link found' : 'No Yelp link';
+      
+      results['facebook-link'] = fullHTML.includes('facebook.com');
+      findings['facebook-link'] = results['facebook-link'] ? 'Facebook link found' : 'No Facebook link';
+      
+      results['bbb-link'] = fullHTML.includes('bbb.org') || /bbb|better business/i.test(bodyText);
+      findings['bbb-link'] = results['bbb-link'] ? 'BBB reference found' : 'No BBB reference';
+      
+      return { results, findings };
+    }
+
+    // ============================================
+    // UI STATE & FUNCTIONS
+    // ============================================
+    let scanResults = {};
+    let scanFindings = {};
+    let showTips = true;
+    let manualChecks = {};
+
+    function getGrade(pct) {
+      if (pct >= 90) return { grade: 'A', label: 'Excellent', color: '#059669' };
+      if (pct >= 80) return { grade: 'B', label: 'Good', color: '#0891b2' };
+      if (pct >= 70) return { grade: 'C', label: 'Needs Work', color: '#d97706' };
+      if (pct >= 60) return { grade: 'D', label: 'Poor', color: '#dc2626' };
+      return { grade: 'F', label: 'Critical Issues', color: '#991b1b' };
+    }
+
+    function calculateScores() {
+      let totalScore = 0;
+      let maxScore = 0;
+      let passed = 0;
+      let failed = 0;
+      let manual = 0;
+      const categoryScores = {};
+
+      auditCategories.forEach(cat => {
+        let catScore = 0;
+        let catMax = 0;
+        let catPassed = 0;
+
+        cat.items.forEach(item => {
+          catMax += item.weight;
+          maxScore += item.weight;
+
+          let itemPassed = false;
+          if (item.check === 'manual') {
+            if (manualChecks[item.id]) {
+              itemPassed = true;
+              passed++;
+              catPassed++;
+            } else {
+              manual++;
+            }
+          } else {
+            itemPassed = scanResults[item.check];
+            if (itemPassed) {
+              passed++;
+              catPassed++;
+            } else {
+              failed++;
+            }
+          }
+
+          if (itemPassed) {
+            totalScore += item.weight;
+            catScore += item.weight;
+          }
+        });
+
+        categoryScores[cat.id] = {
+          score: catScore,
+          max: catMax,
+          passed: catPassed,
+          total: cat.items.length,
+          percentage: Math.round((catScore / catMax) * 100)
+        };
+      });
+
+      return {
+        totalScore,
+        maxScore,
+        passed,
+        failed,
+        manual,
+        percentage: Math.round((totalScore / maxScore) * 100),
+        categoryScores
+      };
+    }
+
+    function renderDashboard() {
+      const scores = calculateScores();
+      const gradeInfo = getGrade(scores.percentage);
+
+      document.getElementById('grade').textContent = gradeInfo.grade;
+      document.getElementById('grade').style.color = gradeInfo.color;
+      document.getElementById('gradeLabel').textContent = gradeInfo.label;
+      document.getElementById('percentage').textContent = scores.percentage + '%';
+      document.getElementById('percentage').style.color = gradeInfo.color;
+      document.getElementById('progressFill').style.width = scores.percentage + '%';
+      document.getElementById('progressFill').style.background = gradeInfo.color;
+      document.getElementById('passedCount').textContent = scores.passed;
+      document.getElementById('failedCount').textContent = scores.failed;
+      document.getElementById('manualCount').textContent = scores.manual;
+
+      // Mini scores
+      const miniContainer = document.getElementById('miniScores');
+      miniContainer.innerHTML = auditCategories.map(cat => {
+        const catScore = scores.categoryScores[cat.id];
+        const catGrade = getGrade(catScore.percentage);
+        return `
+          <div class="mini-score">
+            <span class="mini-score-icon">${cat.icon}</span>
+            <div class="mini-score-info">
+              <div class="mini-score-name">${cat.name}</div>
+              <div class="mini-score-value" style="color: ${catGrade.color};">${catScore.percentage}%</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderCategories() {
+      const container = document.getElementById('categoriesContainer');
+      const scores = calculateScores();
+
+      container.innerHTML = auditCategories.map(cat => {
+        const catScore = scores.categoryScores[cat.id];
+        const catGrade = getGrade(catScore.percentage);
+
+        return `
+          <section class="category expanded" id="cat-${cat.id}">
+            <button class="category-header" onclick="toggleCategory('${cat.id}')">
+              <span class="category-icon">${cat.icon}</span>
+              <div class="category-info">
+                <h2 class="category-title">${cat.name}</h2>
+                <p class="category-desc">${cat.description}</p>
+              </div>
+              <span class="category-badge" style="background: ${catGrade.color}20; color: ${catGrade.color};">
+                ${catScore.passed}/${catScore.total}
+              </span>
+              <span class="category-arrow">▼</span>
+            </button>
+            <div class="category-items">
+              ${cat.items.map(item => {
+                let status, statusClass;
+                if (item.check === 'manual') {
+                  status = manualChecks[item.id] ? 'passed' : 'manual';
+                  statusClass = status;
+                } else {
+                  status = scanResults[item.check] ? 'passed' : 'failed';
+                  statusClass = status;
+                }
+                const finding = item.check !== 'manual' ? scanFindings[item.check] : '';
+                const priorityClass = item.weight === 3 ? 'priority-high' : item.weight === 2 ? 'priority-med' : 'priority-low';
+                const priorityLabel = item.weight === 3 ? 'HIGH' : item.weight === 2 ? 'MED' : 'LOW';
+
+                return `
+                  <div class="audit-item ${statusClass}" onclick="${item.check === 'manual' ? `toggleManual('${item.id}')` : ''}">
+                    <div class="status-indicator ${statusClass}">
+                      ${status === 'passed' ? '✓' : status === 'failed' ? '✗' : '?'}
+                    </div>
+                    <div class="audit-content">
+                      <div class="audit-label-row">
+                        <span class="audit-label">${item.label}</span>
+                        <span class="priority-badge ${priorityClass}">${priorityLabel}</span>
+                        ${item.check === 'manual' ? '<span class="priority-badge" style="background: rgba(148,163,184,0.2); color: #94a3b8;">MANUAL</span>' : ''}
+                      </div>
+                      ${showTips ? `<p class="audit-tip">${item.tip}</p>` : ''}
+                      ${finding ? `<div class="audit-finding ${status === 'passed' ? 'found' : 'missing'}">${finding}</div>` : ''}
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </section>
+        `;
+      }).join('');
+    }
+
+    function toggleCategory(catId) {
+      const section = document.getElementById('cat-' + catId);
+      section.classList.toggle('expanded');
+    }
+
+    function toggleManual(itemId) {
+      manualChecks[itemId] = !manualChecks[itemId];
+      renderDashboard();
+      renderCategories();
+    }
+
+    function processFile(file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const html = e.target.result;
+        const { results, findings } = scanHTML(html);
+        scanResults = results;
+        scanFindings = findings;
+        manualChecks = {};
+
+        document.getElementById('dashboard').classList.add('visible');
+        document.getElementById('mainContent').classList.add('visible');
+        document.getElementById('fileInfo').style.display = 'inline-flex';
+        document.getElementById('fileName').textContent = file.name;
+        document.getElementById('uploadContainer').classList.add('has-file');
+
+        renderDashboard();
+        renderCategories();
+      };
+      reader.readAsText(file);
+    }
+
+    // ============================================
+    // EVENT LISTENERS
+    // ============================================
+    document.getElementById('fileInput').addEventListener('change', function(e) {
+      if (e.target.files.length > 0) {
+        processFile(e.target.files[0]);
+      }
+    });
+
+    const uploadContainer = document.getElementById('uploadContainer');
+    uploadContainer.addEventListener('dragover', function(e) {
+      e.preventDefault();
+      this.classList.add('dragover');
+    });
+    uploadContainer.addEventListener('dragleave', function() {
+      this.classList.remove('dragover');
+    });
+    uploadContainer.addEventListener('drop', function(e) {
+      e.preventDefault();
+      this.classList.remove('dragover');
+      if (e.dataTransfer.files.length > 0) {
+        processFile(e.dataTransfer.files[0]);
+      }
+    });
+
+    document.getElementById('expandAll').addEventListener('click', function() {
+      document.querySelectorAll('.category').forEach(cat => cat.classList.add('expanded'));
+    });
+
+    document.getElementById('collapseAll').addEventListener('click', function() {
+      document.querySelectorAll('.category').forEach(cat => cat.classList.remove('expanded'));
+    });
+
+    document.getElementById('toggleTips').addEventListener('click', function() {
+      showTips = !showTips;
+      this.textContent = showTips ? '💡 Tips On' : '💡 Tips Off';
+      this.style.background = showTips ? 'rgba(74, 144, 217, 0.2)' : 'transparent';
+      renderCategories();
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', function() {
+      scanResults = {};
+      scanFindings = {};
+      manualChecks = {};
+      document.getElementById('dashboard').classList.remove('visible');
+      document.getElementById('mainContent').classList.remove('visible');
+      document.getElementById('fileInfo').style.display = 'none';
+      document.getElementById('uploadContainer').classList.remove('has-file');
+      document.getElementById('fileInput').value = '';
+    });
+  </script>
+</body>
+</html>
